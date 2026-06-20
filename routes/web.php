@@ -70,6 +70,14 @@ Route::resource(
 // 6. REDIRECT & FALLBACK
 Route::redirect('/old-url', '/new-url', 301);
 
+Route::prefix('admin')
+    ->name('admin.')
+    ->group(function () {
+        Route::get('/dashboard', [AdminController::class, 'index'])
+            ->name('dashboard');
+        Route::get('/users', fn () => 'Admin Users')
+            ->name('users');
+});
 
 Route::fallback(function () {
     return response()->view('errors.404', [], 404);
